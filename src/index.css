@@ -1,0 +1,204 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    cursor: none;
+  }
+  
+  body {
+    @apply bg-gray-900 text-gray-100;
+    overflow-x: hidden;
+  }
+
+  a, button {
+    cursor: none;
+  }
+}
+
+@layer utilities {
+  .bg-clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}
+
+/* Custom Cursor */
+.cursor-dot,
+.cursor-outline {
+  @apply fixed pointer-events-none z-50;
+  transition: opacity 0.3s ease;
+}
+
+.cursor-dot {
+  @apply w-1 h-1 bg-blue-400 rounded-full;
+  transition: transform 0.2s ease;
+}
+
+.cursor-outline {
+  @apply w-8 h-8 border border-blue-400/50 rounded-full -translate-x-1/2 -translate-y-1/2;
+  transition: transform 0.15s ease;
+}
+
+/* Hide default cursor when hovering over links */
+a:hover ~ .cursor-dot,
+button:hover ~ .cursor-dot {
+  transform: scale(2);
+}
+
+a:hover ~ .cursor-outline,
+button:hover ~ .cursor-outline {
+  transform: scale(1.5) translate(-33%, -33%);
+  background-color: rgba(59, 130, 246, 0.1);
+}
+
+/* Mouse trail effect */
+.trail {
+  @apply fixed pointer-events-none;
+  width: 6px;
+  height: 6px;
+  background: linear-gradient(90deg, #60a5fa, transparent);
+  border-radius: 50%;
+  animation: trail 1s linear forwards;
+}
+
+@keyframes trail {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.1);
+  }
+}
+
+.nav-link {
+  @apply relative px-4 py-2;
+}
+
+.nav-link::after {
+  content: '';
+  @apply absolute left-0 bottom-0 w-0 h-0.5 bg-blue-400 transition-all duration-300;
+}
+
+.nav-link:hover::after {
+  @apply w-full;
+}
+
+.typing-effect {
+  overflow: hidden;
+  border-right: 2px solid #3b82f6;
+  white-space: nowrap;
+  animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #3b82f6 }
+}
+
+.code-block {
+  @apply font-mono text-sm bg-gray-800/50 p-4 rounded-lg overflow-x-auto backdrop-blur-sm;
+  position: relative;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+.code-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+}
+
+.language-tag {
+  @apply inline-block px-3 py-1 bg-gray-800/80 rounded-full text-sm font-mono;
+  animation: float 3s ease-in-out infinite;
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+.glow {
+  animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% { text-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+  50% { text-shadow: 0 0 30px rgba(59, 130, 246, 0.8); }
+}
+
+.skill-card {
+  @apply p-6 bg-gray-800/50 rounded-lg backdrop-blur-sm border border-gray-700/50;
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.1), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.skill-card:hover::before {
+  opacity: 1;
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(147, 51, 234, 0.15), transparent 40%);
+  filter: blur(100px);
+  z-index: -1;
+  animation: pulse 10s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.project-card {
+  @apply bg-gray-800/50 rounded-lg overflow-hidden backdrop-blur-sm border border-gray-700/50;
+  position: relative;
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+              rgba(59, 130, 246, 0.15), transparent 40%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.project-card:hover::before {
+  opacity: 1;
+}
